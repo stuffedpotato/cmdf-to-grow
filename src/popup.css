@@ -1,11 +1,11 @@
 body {
-    width: 1100px; /* Set the width of your popup */
-    height: 750px; /* Set the height of your popup */
+    width: 400px; /* Set the width of your popup */
+    height: 550px; /* Set the height of your popup */
     margin: 0;
     padding: 10px;
     box-sizing: border-box;
     background-color: #7C905B;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins';
 }
 
 #task-list {
