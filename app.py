@@ -25,6 +25,25 @@ def get_tasks():
     return jsonify({"tasks": tasks})  # Return list of tasks
 
 # TO CREATE A NEW TASK:SUBTASKS
+@app.route("/task", methods=["POST"])
+def create_task():
+    data = request.json
+    main_task = data.get("main_task", "")
+
+    if not main_task:
+        return jsonify({"error": "No main task provided"}), 400
+
+    new_task = {
+        "main_task": main_task,
+        "subtasks": [],  # Empty list for now
+        "completed": False  # Default status is not completed
+    }
+
+    tasks.append(new_task)
+    return jsonify({"message": "Task added", "task": new_task}), 201
+
+
+# TO CREATE A NEW TASK:SUBTASKS
 @app.route("/generate", methods=["POST"])
 def generate():
     data = request.json  # Get JSON data from the request
