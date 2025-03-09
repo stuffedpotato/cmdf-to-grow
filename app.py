@@ -27,23 +27,27 @@ def generate():
     if not main_task:
         return jsonify({"error": "No main task provided"}), 400
     
-    instructions = """List at least 3 and at most 5 subtasks for this task in bullet point format ONLY.
-                    Each subtask should be a clear action step with a MAXIMUM of 6 words.
-                    DO NOT include any explanations, introductions, or conclusions.
-                    DO NOT add numbering or extra text. Use ONLY bullet points, like this:
-                    - First subtask (max 6 words)
-                    - Second subtask (max 6 words)
-                    - Third subtask (max 6 words)
+    generated_main_task_instructions = """Shorten the following task to at most 5 words (no periods or additional text):\n""" + main_task
+    response = model.generate_content(generated_main_task_instructions)
+    # Extract the text from the response
+    generated_main_task = response.text
 
-                    Now generate subtasks for this task: """
+    instructions = """List at least 3 and at most 5 subtasks for this task in bullet point format ONLY.
+    Each subtask should be a clear action step with a MAXIMUM of 6 words.
+    DO NOT include any explanations, introductions, or conclusions.
+    DO NOT add numbering or extra text. Use ONLY bullet points, like this:
+    - First subtask (max 6 words)
+    - Second subtask (max 6 words)
+    - Third subtask (max 6 words)
+    Now generate subtasks for this task: """
     
     formatted_prompt = instructions + main_task
-
+    
     response = model.generate_content(formatted_prompt)
-    subtasks = [{"task": line.strip("-*• ").strip(), "completed": False} for line in response.text.strip().split("\n") if line.startswith(("-", "*", "•"))] 
+    subtasks = [{"task": line.strip("-*• ").strip(), "completed": False} for line in response.text.strip().split("\n") if line.startswith(("-", "*", "•"))]
     
     new_task = {
-        "main_task": main_task,
+        "main_task": generated_main_task,
         "plant": 0,
         "subtasks": subtasks,
         "completed": False
