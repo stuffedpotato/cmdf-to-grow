@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app)
 
 # LOADING AND CONFIGURING API
 load_dotenv()  # Load environment variables from .env
@@ -51,4 +51,4 @@ def generate():
     return jsonify({"reply": new_task})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=8000, debug=True)
