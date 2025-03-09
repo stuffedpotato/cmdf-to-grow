@@ -1,5 +1,5 @@
 # Created by https://www.gitignore.io/api/node,bower,osx,linux,windows,dropbox,sass,less,grunt,sublimetext,code
-
+.env
 ### Node ###
 # Logs
 logs
