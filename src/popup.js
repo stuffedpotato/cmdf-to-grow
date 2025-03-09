@@ -65,7 +65,16 @@ document.addEventListener("DOMContentLoaded", () => {
         checkbox.type = "checkbox";
         checkbox.checked = task.completed;
         checkbox.addEventListener("change", () => {
+            // Update the main task's completed status
             task.completed = checkbox.checked;
+            
+            // Update all subtasks' completed status to match the main task
+            if (task.subtasks && task.subtasks.length > 0) {
+                task.subtasks.forEach(subtask => {
+                    subtask.completed = checkbox.checked;
+                });
+            }
+            
             saveTasks();
             loadTasks();
         });

@@ -25,45 +25,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to check if all subtasks are completed
     function checkAllSubtasksCompleted() {
-        if (!currentTaskData || !currentTaskData.subtasks || currentTaskData.subtasks.length === 0) {
+        if (!currentTask || !currentTask.subtasks || currentTask.subtasks.length === 0) {
             return false;
         }
         
-        return currentTaskData.subtasks.every(subtask => subtask.completed);
+        return currentTask.subtasks.every(subtask => subtask.completed);
     }
 
-    // Function to update subtask completion status
-    function updateSubtaskStatus(index, completed) {
-        if (currentTaskData && currentTaskData.subtasks) {
-            currentTaskData.subtasks[index].completed = completed;
-            
-            // Update main task checkbox if all subtasks are completed
-            if (checkAllSubtasksCompleted()) {
-                mainTaskCheckbox.checked = true;
-                currentTaskData.completed = true;
-            } else {
-                mainTaskCheckbox.checked = false;
-                currentTaskData.completed = false;
-            }
-            
-            // Save updated data to storage
-            chrome.storage.sync.get(["currentTaskId", "tasks"], (storageData) => {
-                const taskId = storageData.currentTaskId;
-                const tasks = storageData.tasks;
-                
-                if (tasks && tasks[taskId]) {
-                    tasks[taskId].subtasks = currentTaskData.subtasks;
-                    tasks[taskId].completed = currentTaskData.completed;
-                    
-                    chrome.storage.sync.set({ 
-                        tasks: tasks,
-                        currentTask: currentTaskData 
-                    }, () => {
-                        console.log("Task data updated in storage");
-                    });
-                }
-            });
-        }
+    // Function to update main task completion based on subtasks
+    function updateMainTaskCompletion() {
+        if (!currentTask || !currentTask.subtasks) return;
+        
+        // Update main task completion status based on all subtasks
+        currentTask.completed = checkAllSubtasksCompleted();
+        
+        // Save to storage
+        updateTaskInStorage();
     }
 
     // Function to display subtasks
@@ -82,9 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Add event listener to update the completion status
                 checkbox.addEventListener("change", () => {
                     subtask.completed = checkbox.checked;
-                    updateTaskInStorage();
-                    
-                    // Update the plant image based on progress
+                    updateMainTaskCompletion();
                     updatePlantImage();
                 });
                 
@@ -283,6 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     mainTaskTitle.textContent = currentTask.main_task;
                     displaySubtasks(currentTask.subtasks);
                     updatePlantImage();
+                    updateArrowVisibility();
                 } else {
                     showError("Failed to load the current task.");
                 }
