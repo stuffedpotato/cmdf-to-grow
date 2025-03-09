@@ -9,8 +9,8 @@ body {
 
 h1 {
     text-align: left; /* Aligns the title to the left */
-    padding-left: 0px; /* Moves the title more to the left */
-    padding-top: 0px; /* Moves the title up */
+    padding-left: -10px; /* Moves the title more to the left */
+    padding-top: -10px; /* Moves the title up */
     margin: 0; /* Removes any default margin */
     font-size: 30px;
 }
@@ -23,7 +23,7 @@ h1 {
     background-color: #C6CA97;
     padding: 15px;
     border-radius: 10px;
-    max-height: 300px;
+    max-height: 320px;
     overflow-y: auto;
     margin: 10px 0;
     height: 300px; /* Fixed size for the task container */

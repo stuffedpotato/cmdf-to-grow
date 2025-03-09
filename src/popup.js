@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 const plantStages = ["seed.png", "sprout.png", "bush.png", "tree.png"];
-                plantImg.src = plantStages[growthStage];
+                // plantImg.src = plantStages[growthStage];
             }
         });
     }
