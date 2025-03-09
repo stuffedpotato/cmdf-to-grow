@@ -116,9 +116,6 @@ body {
     font-weight: bold;
     cursor: pointer;
     color: black;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     visibility: visible;
     opacity: 1;
     z-index: 10;
