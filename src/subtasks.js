@@ -1,56 +1,78 @@
 document.addEventListener("DOMContentLoaded", () => {
     const subtaskList = document.getElementById("subtask-list");
-    const newSubtaskInput = document.getElementById("new-subtask");
-    const addSubtaskBtn = document.getElementById("add-subtask");
-    const gardenBtn = document.getElementById("garden-btn"); // Get the "My Garden" button
+    const mainTaskTitle = document.querySelector(".main-task-title");
+    const gardenBtn = document.getElementById("garden-btn");
 
-    // Get the current task ID from storage
-    chrome.storage.sync.get("currentTaskId", (data) => {
-        if (data.currentTaskId) {
-            const taskId = data.currentTaskId;
-            // Load subtasks from storage based on the taskId
-            chrome.storage.sync.get("subtasks", (subtaskData) => {
-                const subtasks = subtaskData[taskId] || [];
-                subtasks.forEach(subtask => addSubtaskToUI(subtask.text));
+    console.log("Subtasks.js loaded, getting data from storage...");
+
+    // Function to display error messages in the UI for debugging
+    function showError(message) {
+        const errorDiv = document.createElement("div");
+        errorDiv.textContent = message;
+        errorDiv.style.color = "red";
+        errorDiv.style.padding = "10px";
+        document.body.appendChild(errorDiv);
+        console.error(message);
+    }
+
+    // Clear and update the subtask list
+    function displaySubtasks(subtasks) {
+        subtaskList.innerHTML = '';
+        
+        if (subtasks && subtasks.length > 0) {
+            console.log("Displaying subtasks:", subtasks);
+            subtasks.forEach(subtask => {
+                const li = document.createElement("li");
+                // Remove default bullet styling
+                li.style.listStyle = "none";
+                // Add some margin for spacing
+                li.style.marginBottom = "10px";
+                
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = subtask.completed || false;
+                checkbox.style.marginRight = "10px";
+                checkbox.style.transform = "scale(1.3)"; // Make checkbox a bit larger
+                
+                const taskText = document.createElement("span");
+                taskText.textContent = subtask.task;
+                // Make the text larger
+                taskText.style.fontSize = "18px";
+                
+                li.appendChild(checkbox);
+                li.appendChild(taskText);
+                subtaskList.appendChild(li);
             });
+        } else {
+            showError("No subtasks found for this task.");
+        }
+    }
+
+    // Get data from Chrome storage
+    chrome.storage.sync.get(["currentTaskId", "currentTask"], (data) => {
+        console.log("Data from chrome storage:", data);
+
+        if (data.currentTask) {
+            // Update the main task title
+            if (mainTaskTitle) {
+                mainTaskTitle.textContent = data.currentTask.main_task;
+                console.log("Updated main task title:", data.currentTask.main_task);
+            } else {
+                showError("Main task title element not found.");
+            }
+
+            // Display subtasks
+            if (data.currentTask.subtasks) {
+                displaySubtasks(data.currentTask.subtasks);
+            } else {
+                showError("No subtasks found in the current task data.");
+            }
+        } else {
+            showError("No current task found in chrome storage.");
         }
     });
 
-    // Add new subtask
-    addSubtaskBtn.addEventListener("click", () => {
-        const subtaskText = newSubtaskInput.value.trim();
-        if (subtaskText) {
-            const taskId = localStorage.getItem("taskId");
-            addSubtaskToUI(subtaskText);
-            saveSubtasks(taskId);
-            newSubtaskInput.value = "";
-        }
-    });
-
-    function addSubtaskToUI(text) {
-        const li = document.createElement("li");
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        const taskText = document.createElement("span");
-        taskText.textContent = text;
-
-        li.appendChild(checkbox);
-        li.appendChild(taskText);
-        subtaskList.appendChild(li);
-    }
-
-    function saveSubtasks(taskId) {
-        chrome.storage.sync.get("subtasks", (subtaskData) => {
-            let subtasks = subtaskData[taskId] || [];
-            const subtaskText = newSubtaskInput.value.trim();
-            subtasks.push({ text: subtaskText });
-            const updatedData = { ...subtaskData, [taskId]: subtasks };
-            chrome.storage.sync.set({ subtasks: updatedData });
-        });
-    }
-
-    // Add event listener to the "My Garden" button to navigate to garden.html
     gardenBtn.addEventListener("click", () => {
-        window.location.href = "garden.html"; // Redirect to garden.html
+        window.location.href = "garden.html"; 
     });
 });

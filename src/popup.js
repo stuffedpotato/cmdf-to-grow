@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("task-list");
     const addPlantBtn = document.getElementById("add-plant");
-    const gardenBtn = document.getElementById("garden-btn"); // Get the "My Garden" button
+    const gardenBtn = document.getElementById("garden-btn");
     const newTaskInput = document.getElementById("user-input");
 
     let tasks = [];
@@ -39,24 +39,21 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (data.error) {
-                // Error handling
                 console.error('Error:', error);
             } else {
                 const newTask = data.reply;
                 tasks.push(newTask);
-                addTaskToUI(prompt, false);
+                addTaskToUI(newTask, tasks.length - 1);
                 saveTasks();
                 newTaskInput.value = "";
-                console.log(tasks);
             }
         } catch (error) {
             console.error('Error:', error);
         }
     });
 
-    // Add event listener to the "My Garden" button to navigate to garden.html
     gardenBtn.addEventListener("click", () => {
-        window.location.href = "garden.html"; // Redirect to garden.html
+        window.location.href = "garden.html"; 
     });
 
     function addTaskToUI(task, index) {
@@ -77,19 +74,31 @@ document.addEventListener("DOMContentLoaded", () => {
         const arrowBtn = document.createElement("button");
         arrowBtn.textContent = "→";
         arrowBtn.classList.add("arrow-btn");
+
+        // Log the task data before saving it to chrome storage
         arrowBtn.addEventListener("click", () => {
-            chrome.storage.sync.set({ currentTaskIndex: index }, () => {
-                window.location.href = "subtasks.html";
+            console.log("Arrow button clicked!");
+            console.log("Storing task:", task);
+        
+            chrome.storage.sync.set({ currentTaskId: index, currentTask: task }, () => {
+                // Check if there was an error with chrome.runtime.lastError
+                if (chrome.runtime.lastError) {
+                    console.error("Error storing task:", chrome.runtime.lastError);
+                } else {
+                    console.log("Task saved to chrome storage.");
+                    window.location.href = "subtasks.html";
+                }
             });
         });
+        
 
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "🗑";
         deleteBtn.classList.add("delete-btn");
         deleteBtn.addEventListener("click", () => {
-            tasks.splice(index, 1); // Remove from array
+            tasks.splice(index, 1); 
             saveTasks();
-            loadTasks(); // Reload UI after deletion
+            loadTasks();
         });
 
         li.appendChild(checkbox);
@@ -100,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function saveTasks() {
-        chrome.storage.sync.set({ tasks }, loadTasks); // Save and reload UI
+        chrome.storage.sync.set({ tasks });
+        loadTasks();
     }
 });
