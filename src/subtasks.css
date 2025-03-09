@@ -71,9 +71,9 @@ body {
     position: relative;
   }
   
-  .plant-img {
-    width: 70%;
-    height: auto;
+  .plant-picture {
+    width: 100px;
+    height: 100px;
   }
   
   .navigation {

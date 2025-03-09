@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
         arrowBtn.textContent = "→";
         arrowBtn.classList.add("arrow-btn");
         arrowBtn.addEventListener("click", () => {
-            alert(`Task: ${text}`);
+            window.location.href = "subtasks.html";
         });
 
         li.appendChild(checkbox);
