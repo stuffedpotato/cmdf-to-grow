@@ -1,56 +1,23 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtasks</title>
+    <link rel="stylesheet" type="text/css" href="subtasks.css">
 </head>
 <body>
-  <div class="background-pattern">
-    <!-- Pattern will be created with CSS -->
-  </div>
-  
-  <div class="header">
-    <div class="title">ToGrow</div>
-    <div class="subtitle">You're growing something great!</div>
-  </div>
-  
-  <button class="garden-button">My Garden</button>
-  
-  <div class="plant-container">
-    <div class="plant-picture">
-        <img class="plant-picture" src="./temporary plant photo.png" />
+    <div class="header">
+        <div class="page-title">Subtasks</div>
     </div>
-  </div>
-  
-  <div class="navigation">
-    <div class="nav-arrow">&#8249;</div>
-    <div class="page-title">Clean Kitchen</div>
-    <div class="nav-arrow">&#8250;</div>
-  </div>
-  
-  <div class="tasks-container">
-    <div class="task-item">
-      <div class="checkbox"></div>
-      <div class="task-text">Wash the dishes</div>
+
+    <div class="tasks-container">
+        <ul id="subtask-list"></ul>
     </div>
-    
-    <div class="task-item">
-      <div class="checkbox"></div>
-      <div class="task-text">Clean Counter Tops</div>
-    </div>
-    
-    <div class="task-item">
-      <div class="checkbox"></div>
-      <div class="task-text">Dry and Put Away Dishes</div>
-    </div>
-    
-    <div class="task-item">
-      <div class="checkbox"></div>
-      <div class="task-text">Sweep the Floor</div>
-    </div>
-    
-    <div class="task-item" style="background-color: transparent; border: 2px dashed #d2d7aa;">
-      <!-- Empty task slot for adding new tasks -->
-    </div>
-  </div>
+
+    <input type="text" id="new-subtask" placeholder="Add a new subtask">
+    <button id="add-subtask">Add Subtask</button>
+
+    <script src="subtasks.js"></script>
 </body>
 </html>
-
-
-

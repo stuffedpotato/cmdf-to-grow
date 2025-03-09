@@ -1,23 +1,23 @@
 body {
-    width: 400px; /* Set the width of your popup */
-    height: 550px; /* Set the height of your popup */
-    margin: 0;
-    padding: 10px;
-    box-sizing: border-box;
+    width: 400px;
+    height: 550px;
     background-color: #7C905B;
     font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    box-sizing: border-box;
 }
+
 h1 {
-    text-align: center; /* Center the text horizontally */
+    text-align: center;
 }
 
 #task-list {
-    max-height: 60%;  /* Adjust the height as needed */
+    max-height: 60%;
     overflow-y: auto;
 }
 
 #task-container {
-    background-color: #C6CA97; /* Light green */
+    background-color: #C6CA97;
     padding: 15px;
     border-radius: 10px;
     max-height: 300px;
@@ -31,7 +31,7 @@ h1 {
 }
 
 #task-list li {
-    background: #FBF6E6; /* Even lighter green for each task */
+    background: #FBF6E6;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
