@@ -1,24 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
     const plantsContainer = document.getElementById("plants-container");
     const logo = document.getElementById("home-btn");
-
-    // Load tasks 
+    
+    // Load tasks
     chrome.storage.sync.get("tasks", (data) => {
         if (data.tasks) {
-            data.tasks.forEach((task) => {
-                const plantStage = calculatePlantStage(task);
-                const plantCard = createPlantCard(task, plantStage);
-                plantsContainer.appendChild(plantCard);
-            });
+            // Check if tasks is an object (and not an array)
+            if (typeof data.tasks === 'object' && !Array.isArray(data.tasks)) {
+                // Convert object to array
+                const tasksArray = Object.values(data.tasks);
+                tasksArray.forEach((task) => {
+                    const plantStage = calculatePlantStage(task);
+                    const plantCard = createPlantCard(task, plantStage);
+                    plantsContainer.appendChild(plantCard);
+                });
+            } else if (Array.isArray(data.tasks)) {
+                // If it's already an array, use it directly
+                data.tasks.forEach((task) => {
+                    const plantStage = calculatePlantStage(task);
+                    const plantCard = createPlantCard(task, plantStage);
+                    plantsContainer.appendChild(plantCard);
+                });
+            } else {
+                console.error("Tasks data is neither an object nor an array:", data.tasks);
+            }
         }
     });
 
-    // Calculate the plant stage based on sub-task progress
+    // The rest of your functions remain the same
     function calculatePlantStage(task) {
         const completedSubtasks = task.subtasks.filter(subTask => subTask.completed).length;
         const totalSubtasks = task.subtasks.length;
         const progress = completedSubtasks / totalSubtasks;
-
         if (progress === 0) return 0;
         if (progress <= 0.25) return 0;
         if (progress <= 0.5) return 1;
@@ -26,11 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return 3; // 100% completed
     }
 
-    // Create a plant card for a task
     function createPlantCard(task, plantStage) {
         const plantCard = document.createElement("div");
         plantCard.classList.add("plant-card");
-
         const plantImage = document.createElement("img");
         if (plantStage === 0) {
             plantImage.src = `img/sprout_0.png`;
@@ -38,10 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
             plantImage.src = `img/plant${task.plant}-stage${plantStage}.png`;
             plantImage.alt = `Plant ${task.plant} Stage ${plantStage}`;
         }
-
         const taskName = document.createElement("p");
         taskName.textContent = task.main_task;
-
         plantCard.appendChild(plantImage);
         plantCard.appendChild(taskName);
         return plantCard;
