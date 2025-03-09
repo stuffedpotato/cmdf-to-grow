@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const subtaskList = document.getElementById("subtask-list");
     const mainTaskTitle = document.querySelector(".main-task-title");
     const gardenBtn = document.getElementById("garden-btn");
+    const logo = document.getElementById("home-btn");
 
     console.log("Subtasks.js loaded, getting data from storage...");
 
@@ -74,5 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     gardenBtn.addEventListener("click", () => {
         window.location.href = "garden.html"; 
+    });
+
+    logo.addEventListener("click", () => {
+        window.location.href = "popup.html";
     });
 });
