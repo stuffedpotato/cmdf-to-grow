@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("task-list");
     const newTaskInput = document.getElementById("new-task");
     const addPlantBtn = document.getElementById("add-plant");
+    const gardenBtn = document.getElementById("garden-btn"); // Get the "My Garden" button
 
     let tasks = [];
 
@@ -19,42 +20,45 @@ document.addEventListener("DOMContentLoaded", () => {
     loadTasks();
 
     document.getElementById('add-task').addEventListener('click', async () => {
-    const prompt = newTaskInput.value.trim(); 
-  
-    if (!prompt) {
-      alert('Please enter a prompt.');
-      return;
-    }
-  
-    try {
-      const response = await fetch('http://localhost:5000/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({main_task: prompt }),
-      });
-  
-      const data = await response.json();
-  
-      if (data.error) {
-        //TODO: Error handling
-        console.error('Error:', error);
+        const prompt = newTaskInput.value.trim(); 
 
-      } else {
-        const newTask = data.reply;
-        tasks.push(newTask)
-        addTaskToUI(prompt, false);
-        saveTasks();
-        newTaskInput.value = "";
-        console.log(tasks)
-    
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  });
-  
+        if (!prompt) {
+            alert('Please enter a prompt.');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:5000/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ main_task: prompt }),
+            });
+
+            const data = await response.json();
+
+            if (data.error) {
+                //TODO: Error handling
+                console.error('Error:', error);
+
+            } else {
+                const newTask = data.reply;
+                tasks.push(newTask)
+                addTaskToUI(prompt, false);
+                saveTasks();
+                newTaskInput.value = "";
+                console.log(tasks);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+
+    // Add event listener to the "My Garden" button to navigate to garden.html
+    gardenBtn.addEventListener("click", () => {
+        window.location.href = "garden.html"; // Redirect to garden.html
+    });
 
     function addTaskToUI(task, index) {
         const li = document.createElement("li");
