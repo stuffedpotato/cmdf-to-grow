@@ -211,3 +211,13 @@ body {
 .button-container {
     align-items: end;
 }
+
+.arrow-visible {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.arrow-hidden {
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
