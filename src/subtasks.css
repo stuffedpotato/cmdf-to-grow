@@ -6,7 +6,8 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
+    align-items: center;
 }
 
 .header {
@@ -16,7 +17,7 @@ body {
     width: 100%;
     padding: 0px 12px; /* Adjust padding for spacing */
     position: absolute; /* Ensures it's positioned at the top */
-    top: 2px; /* Moves it higher */
+    top: -10px; /* Moves it higher */
     left: 0;
     right: 0;
     box-sizing: border-box;
@@ -34,7 +35,7 @@ body {
     padding: 8px 15px;
     border-radius: 10px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: SemiBold;
     border: none;
     cursor: pointer;
 }
@@ -49,9 +50,9 @@ body {
 
 .plant-image {
     border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    box-shadow: 0 8px 8px 0 rgba(205, 92, 92, 0.372);
+    width: 170px;
+    height: 170px;
+    box-shadow: 0 8px 8px 0 rgba(28, 26, 26, 0.372);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -76,34 +77,85 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.task-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; /* Ensures arrows stay wide apart */
+    position: relative;
+}
+
+
+.arrow {
+    font-size: 28px; /* Makes arrows wider and less pointy */
+    font-weight: bold;
+    cursor: pointer;
+    color: #264026;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.arrow:hover {
+    color: #4a6741; /* Dark green on hover */
+}
+
+.left {
+    left: -100px; /* Move the left arrow farther left */
+}
+
+.right {
+    right: -100px; /* Move the right arrow farther right */
+}
+
 .tasks-container {
-    padding: 15px;
-    background-color: rgba(210, 215, 170, 0.7);
+    padding-top: 0px;
+    padding-left: 15px;
+    padding-right: 9px;
+    padding-bottom: 2px;
+    background-color: #C6CA97;
     border-radius: 10px;
-    width: 90%;
-    max-width: 350px;
+    width: 300px;
+    height: 400px;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 0 auto; 
+    overflow-y: auto;
+}
+
+.subtask-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
 }
 
 .task-item {
     background-color: #f9f5e7;
-    margin: 10px 0;
+    margin: 5px 0; /* Add more spacing */
     padding: 10px;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 90%; /* Slightly smaller for better spacing */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .checkbox {
-    width: 24px;
-    height: 24px;
-    border: 2px solid #4a6741;
+    width: 20px;
+    height: 20px;
     margin-right: 10px;
-    border-radius: 3px;
+    cursor: pointer;
+    border: 2px solid #4a6741; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    position: relative;
+    background-color: #f9f5e7; /* Background color when unchecked */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.subtask-list {
+    list-style: square;
+    padding: 0;
 }
 
 .task-text {
