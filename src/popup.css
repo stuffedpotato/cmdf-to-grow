@@ -26,16 +26,15 @@ body {
     width: 100%;
     padding: 0px 12px; 
     position: absolute; 
-    top: -10px; 
+    top: 10px; 
     left: 0;
     right: 0;
     box-sizing: border-box;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
+    height: 24px; 
+    width: auto;
 }
 
 .garden-button {

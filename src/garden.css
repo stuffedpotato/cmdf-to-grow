@@ -5,7 +5,7 @@ body {
     background-size: cover;
     background-position: center;
     font-family: 'Poppins', sans-serif;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
     display: flex;
     color: black;
@@ -16,9 +16,14 @@ body {
 
 .header-left {
     position: absolute;
-    top: 20px; /* Adjust as necessary */
-    left: 20px;
+    top: 14px; 
+    left: 12px;
     color: black;
+}
+
+.logo {
+    height: 24px; 
+    width: auto;
 }
 
 
