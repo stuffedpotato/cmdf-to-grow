@@ -1,80 +1,107 @@
 document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("task-list");
-    const addTaskBtn = document.getElementById("add-task");
-    const userInput = document.getElementById("user-input");
+    const newTaskInput = document.getElementById("new-task");
+    const addPlantBtn = document.getElementById("add-plant");
 
-    // Load tasks from storage
-    chrome.storage.sync.get("tasks", (data) => {
-        if (data.tasks) {
-            data.tasks.forEach(task => addTaskToUI(task.text, task.completed, task.id));
-        }
-    });
+    let tasks = [];
 
-    // Add task when "Add Task" button is clicked
-    addTaskBtn.addEventListener("click", () => {
-        const taskText = userInput.value.trim();  // Get task text from the input field
-        if (taskText) {
-            const taskId = Date.now(); // Unique task ID
-            addTaskToUI(taskText, false, taskId);
-            saveTasks();
-            updatePlantGrowth();
-            userInput.value = ""; // Clear the input after task is added
-        } else {
-            alert("Please enter a task!");
-        }
-    });
+    function loadTasks() {
+        chrome.storage.sync.get("tasks", (data) => {
+            taskList.innerHTML = "";
 
-    function addTaskToUI(text, completed, taskId) {
+            if (data.tasks) {
+                tasks = data.tasks;
+                tasks.forEach((task, index) => addTaskToUI(task, index));
+            }
+        });
+    }
+
+    loadTasks();
+
+    document.getElementById('add-task').addEventListener('click', async () => {
+    const prompt = newTaskInput.value.trim(); 
+  
+    if (!prompt) {
+      alert('Please enter a prompt.');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:5000/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({main_task: prompt }),
+      });
+  
+      const data = await response.json();
+  
+      if (data.error) {
+        //TODO: Error handling
+        console.error('Error:', error);
+
+      } else {
+        const newTask = data.reply;
+        tasks.push(newTask)
+        addTaskToUI(prompt, false);
+        saveTasks();
+        newTaskInput.value = "";
+        console.log(tasks)
+    
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+  
+
+    function addTaskToUI(task, index) {
         const li = document.createElement("li");
+
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-        checkbox.checked = completed;
-        checkbox.addEventListener("change", saveTasks);
-        
+        checkbox.checked = task.completed;
+        checkbox.addEventListener("change", () => {
+            task.completed = checkbox.checked;
+            saveTasks();
+            loadTasks();
+        });
+
         const taskText = document.createElement("span");
-        taskText.textContent = text;
+        taskText.textContent = task.main_task;
 
         const arrowBtn = document.createElement("button");
         arrowBtn.textContent = "→";
         arrowBtn.classList.add("arrow-btn");
         arrowBtn.addEventListener("click", () => {
-            chrome.storage.sync.set({ currentTaskId: taskId }, () => {
+            chrome.storage.sync.set({ currentTaskIndex: index }, () => {
                 window.location.href = "subtasks.html";
             });
+        });
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "🗑";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.addEventListener("click", () => {
+            tasks.splice(index, 1); // Remove from array
+            saveTasks();
+            loadTasks(); // Reload UI after deletion
         });
 
         li.appendChild(checkbox);
         li.appendChild(taskText);
         li.appendChild(arrowBtn);
+        li.appendChild(deleteBtn);
         taskList.appendChild(li);
     }
 
     function saveTasks() {
-        const tasks = [];
-        document.querySelectorAll("#task-list li").forEach(li => {
-            tasks.push({
-                text: li.children[1].textContent,
-                completed: li.children[0].checked,
-                id: Date.now() // ID for the task
-            });
-        });
-        chrome.storage.sync.set({ tasks });
+        chrome.storage.sync.set({ tasks }, loadTasks); // Save and reload UI
     }
 
-    function updatePlantGrowth() {
-        chrome.storage.sync.get("tasks", (data) => {
-            if (data.tasks) {
-                const completedTasks = data.tasks.filter(t => t.completed).length;
-                const totalTasks = data.tasks.length;
-                let growthStage = 0;
-
-                if (totalTasks > 0) {
-                    growthStage = Math.floor((completedTasks / totalTasks) * 3);
-                }
-
-                const plantStages = ["seed.png", "sprout.png", "bush.png", "tree.png"];
-                // plantImg.src = plantStages[growthStage];
-            }
-        });
-    }
+    // Handle Add a Plant button
+    addPlantBtn.addEventListener("click", () => {
+        alert("Adding a plant...");
+    });
 });
