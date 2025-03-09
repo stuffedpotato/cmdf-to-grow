@@ -53,6 +53,11 @@ body {
     cursor: pointer;
 }
 
+#garden-btn:hover {
+    background-color: #61705d;
+    transition: 0.3s;
+}
+
 .plant-container {
     display: flex;
     justify-content: center;
