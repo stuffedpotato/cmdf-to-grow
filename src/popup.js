@@ -82,9 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "subtasks.html";
         });
 
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "🗑";
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.addEventListener("click", () => {
+            li.remove(); // Remove from UI
+            saveTasks(); // Save updated task list
+        });
+
         li.appendChild(checkbox);
         li.appendChild(taskText);
         li.appendChild(arrowBtn);
+        li.appendChild(deleteBtn);
         taskList.appendChild(li);
     }
 
@@ -93,6 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("#task-list li").forEach(li => {
             tasks.push({ text: li.children[1].textContent, completed: li.children[0].checked });
         });
+
+        tasks.forEach(task => {
+            if (task.subtasks) {
+                task.completed = task.subtasks.every(subtask => subtask.completed);
+            }
+        });
+        
         chrome.storage.sync.set({ tasks });
     }
 
