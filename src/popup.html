@@ -9,22 +9,24 @@
 </head>
 
 <body>
-    <!-- Header section with the title and garden button -->
+    <div class="background"></div>
+    
     <div class="header">
-        <h1>ToGrow</h1>
-        <button id="garden-btn">My Garden</button>
+        <img src="img/ToGrowLogo.png" alt="ToGrow Logo" class="logo">
+        <div class="garden-button-container">
+            <!-- Button will now redirect to garden.html -->
+            <button class="garden-button" id="garden-btn">My Garden</button>
+        </div>
     </div>
 
-    <!-- Task container -->
     <div id="task-container">
         <ul id="task-list"></ul>
     </div>
 
-    <!-- Text box for user input -->
     <textarea id="user-input" placeholder="Type your task here..."></textarea>
 
-    <!-- Add Task button -->
     <button id="add-task">Add Task</button>
 
-    <script src="popup.js"></script>
+    <script src="popup.js"></script> <!-- Link to JavaScript -->
 </body>
+</html>
