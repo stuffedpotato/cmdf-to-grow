@@ -1,15 +1,26 @@
+
 body {
     width: 400px;
     height: 550px;
-    background-image: url('grass.png'); 
-    background-size: 80%; 
-    background-position: center; 
     padding: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+} 
+
+.background {
+    background-image: url('grass.png'); 
+    background-size: cover; /* Ensure the background image fully covers the screen */
+    background-position: center; 
+    position: absolute; /* Ensure it is positioned correctly */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1; /* Keeps the background behind other content */
+    opacity: 0.5;
 }
 
 .header {
@@ -74,9 +85,10 @@ body {
 }
 
 .main-task-title {
-    font-size: 24px;
+    font-size: 32px;
     color: #000000;
-    font-weight: bold;
+    font-weight: bolder;
+    padding: 6px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -104,11 +116,11 @@ body {
 }
 
 .left {
-    left: -100px; /* Move the left arrow farther left */
+    left: -80px; /* Move the left arrow farther left */
 }
 
 .right {
-    right: -100px; /* Move the right arrow farther right */
+    right: -80px; /* Move the right arrow farther right */
 }
 
 .tasks-container {
@@ -116,7 +128,7 @@ body {
     padding-left: 15px;
     padding-right: 9px;
     padding-bottom: 2px;
-    background-color: #C6CA97;
+    background-color: #7C905B;
     border-radius: 10px;
     width: 300px;
     height: 400px;
