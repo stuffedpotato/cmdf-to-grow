@@ -1,50 +1,6 @@
-document.getElementById('generateButton').addEventListener('click', async () => {
-    const prompt = document.getElementById('promptInput').value;
-  
-    if (!prompt) {
-      alert('Please enter a prompt.');
-      return;
-    }
-  
-    try {
-      const response = await fetch('http://localhost:5000/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt }),
-      });
-  
-      const data = await response.json();
-  
-      if (data.error) {
-        document.getElementById('response').textContent = data.error;
-      } else {
-        const subtasks = data.reply.join('\n');
-        document.getElementById('response').textContent = subtasks;
-  
-        // Save the response to chrome.storage.sync
-        chrome.storage.sync.set({ lastResponse: subtasks }, () => {
-          console.log('Response saved to chrome.storage.sync');
-        });
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      document.getElementById('response').textContent = 'Failed to generate subtasks.';
-    }
-  });
-  
-  // Load the last saved response when the popup opens
-  chrome.storage.sync.get('lastResponse', (data) => {
-    if (data.lastResponse) {
-      document.getElementById('response').textContent = data.lastResponse;
-    }
-});
-
 document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("task-list");
     const newTaskInput = document.getElementById("new-task");
-    const addTaskBtn = document.getElementById("add-task");
     const addPlantBtn = document.getElementById("add-plant");
 
     let tasks = [];
@@ -62,17 +18,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loadTasks();
 
-    // Add new task
-    addTaskBtn.addEventListener("click", () => {
-        const taskText = newTaskInput.value.trim();
-        if (taskText) {
-            const newTask = { main_task: taskText, subtasks: [], completed: false };
-            tasks.push(newTask)
-            addTaskToUI(taskText, false);
-            saveTasks();
-            newTaskInput.value = "";
-        }
-    }); 
+    document.getElementById('add-task').addEventListener('click', async () => {
+    const prompt = newTaskInput.value.trim(); 
+  
+    if (!prompt) {
+      alert('Please enter a prompt.');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:5000/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({main_task: prompt }),
+      });
+  
+      const data = await response.json();
+  
+      if (data.error) {
+        //TODO: Error handling
+        console.error('Error:', error);
+
+      } else {
+        const newTask = data.reply;
+        tasks.push(newTask)
+        addTaskToUI(prompt, false);
+        saveTasks();
+        newTaskInput.value = "";
+        console.log(tasks)
+    
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
+  
 
     function addTaskToUI(task, index) {
         const li = document.createElement("li");
