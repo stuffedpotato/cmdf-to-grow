@@ -66,12 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Function to display subtasks
     function displaySubtasks(subtasks) {
         subtaskList.innerHTML = '';
         
         if (subtasks && subtasks.length > 0) {
             console.log("Displaying subtasks:", subtasks);
-            subtasks.forEach((subtask, index) => {
             subtasks.forEach((subtask, index) => {
                 const li = document.createElement("li");
                 
@@ -101,58 +101,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Function to update arrow visibility based on current position
-    // Function to update arrow visibility based on current position
-function updateArrowVisibility() {
-    chrome.storage.sync.get(["currentTaskId", "tasks"], (data) => {
-        const currentId = data.currentTaskId;
-        const tasks = data.tasks;
-        
-        if (!tasks) {
-            console.error("No tasks found when updating arrow visibility");
-            return;
-        }
-        
-        const taskIds = Object.keys(tasks);
-        const currentIndex = taskIds.indexOf(currentId);
-        const totalTasks = taskIds.length;
-        
-        console.log("Arrow visibility check: Current index", currentIndex, "of", totalTasks, "tasks");
-        
-        // Handle left arrow (previous)
-        if (leftArrow) {
-            if (currentIndex <= 0) {
-                console.log("Hiding left arrow (first item)");
-                // Set both visibility and opacity to ensure it's hidden
-                leftArrow.style.visibility = "hidden";
-                leftArrow.style.opacity = "0";
-            } else {
-                console.log("Showing left arrow (not first item)");
-                // Make sure both visibility and opacity are set to make it visible
-                leftArrow.style.visibility = "visible";
-                leftArrow.style.opacity = "1";
+    function updateArrowVisibility() {
+        chrome.storage.sync.get(["currentTaskId", "tasks"], (data) => {
+            const currentId = data.currentTaskId;
+            const tasks = data.tasks;
+            
+            if (!tasks) {
+                console.error("No tasks found when updating arrow visibility");
+                return;
             }
-        } else {
-            console.error("Left arrow element not found during visibility update");
-        }
-        
-        // Handle right arrow (next)
-        if (rightArrow) {
-            if (currentIndex >= taskIds.length - 1) {
-                console.log("Hiding right arrow (last item)");
-                // Set both visibility and opacity to ensure it's hidden
-                rightArrow.style.visibility = "hidden";
-                rightArrow.style.opacity = "0";
+            
+            const taskIds = Object.keys(tasks);
+            const currentIndex = taskIds.indexOf(currentId);
+            const totalTasks = taskIds.length;
+            
+            console.log("Arrow visibility check: Current index", currentIndex, "of", totalTasks, "tasks");
+            
+            // Handle left arrow (previous)
+            if (leftArrow) {
+                if (currentIndex <= 0) {
+                    console.log("Hiding left arrow (first item)");
+                    leftArrow.style.visibility = "hidden";
+                    leftArrow.style.opacity = "0";
+                } else {
+                    console.log("Showing left arrow (not first item)");
+                    leftArrow.style.visibility = "visible";
+                    leftArrow.style.opacity = "1";
+                }
             } else {
-                console.log("Showing right arrow (not last item)");
-                // Make sure both visibility and opacity are set to make it visible
-                rightArrow.style.visibility = "visible";
-                rightArrow.style.opacity = "1";
+                console.error("Left arrow element not found during visibility update");
             }
-        } else {
-            console.error("Right arrow element not found during visibility update");
-        }
-    });
-}
+            
+            // Handle right arrow (next)
+            if (rightArrow) {
+                if (currentIndex >= taskIds.length - 1) {
+                    console.log("Hiding right arrow (last item)");
+                    rightArrow.style.visibility = "hidden";
+                    rightArrow.style.opacity = "0";
+                } else {
+                    console.log("Showing right arrow (not last item)");
+                    rightArrow.style.visibility = "visible";
+                    rightArrow.style.opacity = "1";
+                }
+            } else {
+                console.error("Right arrow element not found during visibility update");
+            }
+        });
+    }
 
     // Function to navigate to previous task
     function navigateToPrevTask() {
@@ -167,7 +162,6 @@ function updateArrowVisibility() {
             
             // Get all task IDs
             const taskIds = Object.keys(tasks);
-            // Find the index of the current task
             const currentIndex = taskIds.indexOf(currentId);
             
             console.log("Current task index:", currentIndex);
@@ -183,7 +177,6 @@ function updateArrowVisibility() {
                     currentTaskId: prevTaskId,
                     currentTask: tasks[prevTaskId]
                 }, () => {
-                    // Reload the page to display the new task
                     window.location.reload();
                 });
             } else {
@@ -203,25 +196,20 @@ function updateArrowVisibility() {
                 return;
             }
             
-            // Get all task IDs
             const taskIds = Object.keys(tasks);
-            // Find the index of the current task
             const currentIndex = taskIds.indexOf(currentId);
             
             console.log("Current task index:", currentIndex);
             
-            // If there's a next task, navigate to it
             if (currentIndex < taskIds.length - 1) {
                 const nextTaskId = taskIds[currentIndex + 1];
                 
                 console.log("Navigating to next task:", nextTaskId);
                 
-                // Update current task ID and data
                 chrome.storage.sync.set({
                     currentTaskId: nextTaskId,
                     currentTask: tasks[nextTaskId]
                 }, () => {
-                    // Reload the page to display the new task
                     window.location.reload();
                 });
             } else {
@@ -233,7 +221,6 @@ function updateArrowVisibility() {
     function updatePlantImage() {
         if (!currentTask) return;
         
-        // Calculate plant stage based on subtask completion
         const completedSubtasks = currentTask.subtasks.filter(subtask => subtask.completed).length;
         const totalSubtasks = currentTask.subtasks.length;
         const progress = totalSubtasks > 0 ? completedSubtasks / totalSubtasks : 0;
@@ -243,9 +230,8 @@ function updateArrowVisibility() {
         else if (progress <= 0.25) plantStage = 0;
         else if (progress <= 0.5) plantStage = 1;
         else if (progress <= 0.75) plantStage = 2;
-        else plantStage = 3; // 100% completed
+        else plantStage = 3;
         
-        // Update the plant image
         if (plantStage === 0) {
             plantImage.src = "img/sprout_0.png";
         } else {
@@ -255,10 +241,8 @@ function updateArrowVisibility() {
     }
 
     function updateTaskInStorage() {
-        // Update the current task in allTasks array
         allTasks[currentTaskId] = currentTask;
         
-        // Save all tasks back to storage
         chrome.storage.sync.set({ 
             tasks: allTasks,
             currentTaskId: currentTaskId,
@@ -271,12 +255,10 @@ function updateArrowVisibility() {
             currentTaskId = taskId;
             currentTask = allTasks[taskId];
             
-            // Update the UI
             mainTaskTitle.textContent = currentTask.main_task;
             displaySubtasks(currentTask.subtasks);
             updatePlantImage();
             
-            // Save current task ID to storage
             chrome.storage.sync.set({ 
                 currentTaskId: currentTaskId,
                 currentTask: currentTask
@@ -284,23 +266,19 @@ function updateArrowVisibility() {
         }
     }
 
-    // Load all tasks first
     chrome.storage.sync.get("tasks", (data) => {
         if (data.tasks && data.tasks.length > 0) {
             allTasks = data.tasks;
             
-            // Then get the current task ID
             chrome.storage.sync.get(["currentTaskId", "currentTask"], (taskData) => {
                 currentTaskId = taskData.currentTaskId || 0;
                 
-                // Make sure currentTaskId is within bounds
                 if (currentTaskId >= allTasks.length) {
                     currentTaskId = 0;
                 }
                 
                 currentTask = allTasks[currentTaskId];
                 
-                // Update the UI
                 if (currentTask) {
                     mainTaskTitle.textContent = currentTask.main_task;
                     displaySubtasks(currentTask.subtasks);
@@ -314,34 +292,8 @@ function updateArrowVisibility() {
         }
     });
 
-    // Event listeners for arrow navigation
-    leftArrow.addEventListener("click", () => {
-        if (allTasks.length > 0) {
-            let prevTaskId = currentTaskId - 1;
-            if (prevTaskId < 0) {
-                prevTaskId = allTasks.length - 1; // Wrap around to the last task
-            }
-            loadTask(prevTaskId);
-        }
-    });
-
-    rightArrow.addEventListener("click", () => {
-        if (allTasks.length > 0) {
-            let nextTaskId = currentTaskId + 1;
-            if (nextTaskId >= allTasks.length) {
-                nextTaskId = 0; // Wrap around to the first task
-            }
-            loadTask(nextTaskId);
-        }
-        
-        // Update arrow visibility after loading task data
-        updateArrowVisibility();
-    });
-
-    // Add event listeners to arrow buttons
     if (leftArrow) {
         leftArrow.addEventListener("click", navigateToPrevTask);
-        // Add pointer cursor to indicate it's clickable
         leftArrow.style.cursor = "pointer";
         console.log("Left arrow click listener added");
     } else {
@@ -350,19 +302,16 @@ function updateArrowVisibility() {
     
     if (rightArrow) {
         rightArrow.addEventListener("click", navigateToNextTask);
-        // Add pointer cursor to indicate it's clickable
         rightArrow.style.cursor = "pointer";
         console.log("Right arrow click listener added");
     } else {
         console.error("Right arrow element not found");
     }
 
-    // Garden button navigation
     gardenBtn.addEventListener("click", () => {
         window.location.href = "garden.html"; 
     });
 
-    // Logo button navigation to popup.html
     if (logoBtn) {
         logoBtn.addEventListener("click", () => {
             window.location.href = "popup.html";
