@@ -65,4 +65,5 @@ body {
     color: black;
     text-shadow: none;
     text-align: center;
+    cursor: pointer;
 }
