@@ -2,10 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const subtaskList = document.getElementById("subtask-list");
     const mainTaskTitle = document.querySelector(".main-task-title");
     const gardenBtn = document.getElementById("garden-btn");
+    const logo = document.getElementById("home-btn");
     const leftArrow = document.querySelector(".arrow.left");
     const rightArrow = document.querySelector(".arrow.right");
     let mainTaskCheckbox; // Store reference to main checkbox
     let currentTaskData; // Store reference to current task data
+
 
     console.log("Subtasks.js loaded, getting data from storage...");
 
@@ -335,5 +337,9 @@ function updateArrowVisibility() {
 
     gardenBtn.addEventListener("click", () => {
         window.location.href = "garden.html"; 
+    });
+
+    logo.addEventListener("click", () => {
+        window.location.href = "popup.html";
     });
 });
