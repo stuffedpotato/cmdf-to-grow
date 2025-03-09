@@ -1,6 +1,6 @@
 body {
     width: 400px;
-    min-height: 550px; /* Use min-height instead of fixed height */
+    min-height: 550px;
     background-image: url('grass.png'); 
     background-size: auto;
     background-position: center;
@@ -11,38 +11,38 @@ body {
     color: black;
     align-items: center;
     flex-direction: column;
-    overflow-y: auto; /* Allow scrolling if content overflows */
+    overflow-y: auto;
+    position: relative;
 }
 
-.header-left {
-    padding: 20px;
-    color: black;
-    display: flex;
-    margin-left: 0;
+/* Transparent Logo Button */
+#home-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    left: 0px;
+    top: 5px;
 }
 
+/* Logo image */
 .logo {
-    height: 24px; 
+    height: 24px;
     width: auto;
 }
 
-h1 {
-    font-size: 36px;
-    margin: 0;
-    color: black;
-    text-shadow: none;
-}
-
+/* Container for plant cards */
 #plants-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center; 
     align-content: flex-start;
     width: 100%; 
-
     box-sizing: border-box;
+    margin-top: 40px; /* Moves the plants down */
 }
 
+/* Plant card styles */
 .plant-card {
     width: 120px;
     display: flex;
@@ -50,13 +50,19 @@ h1 {
     justify-content: flex-start;
     flex-direction: column;
     text-align: center;
+    margin-top: 20px; /* Moves each plant card down */
 }
 
 .plant-card img {
     width: 100px;
 }
 
-#home-btn {
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
+/* Move "My Garden" to the bottom */
+#garden-title {
+    font-size: 36px;
+    margin-top: auto; /* Push to bottom */
+    margin-bottom: 10px;
+    color: black;
+    text-shadow: none;
+    text-align: center;
 }
