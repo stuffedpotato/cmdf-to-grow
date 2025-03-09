@@ -2,45 +2,116 @@ body {
     width: 400px;
     height: 550px;
     background-color: #8a9a5b;
-    font-family: 'Poppins', sans-serif;
     padding: 10px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
 }
 
 .header {
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0px 12px; /* Adjust padding for spacing */
+    position: absolute; /* Ensures it's positioned at the top */
+    top: 2px; /* Moves it higher */
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
 }
 
-.page-title {
-    font-size: 32px;
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.garden-button {
+    background-color: #4a6741;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.plant-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
     margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.plant-image {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    box-shadow: 0 8px 8px 0 rgba(205, 92, 92, 0.372);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.plant-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.main-task-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.main-task-title {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .tasks-container {
     padding: 15px;
     background-color: rgba(210, 215, 170, 0.7);
-    margin: 15px;
     border-radius: 10px;
+    width: 90%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .task-item {
     background-color: #f9f5e7;
     margin: 10px 0;
-    padding: 15px;
-    border-radius: 15px;
+    padding: 10px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .checkbox {
     width: 24px;
     height: 24px;
     border: 2px solid #4a6741;
-    margin-right: 15px;
+    margin-right: 10px;
     border-radius: 3px;
 }
 
 .task-text {
-    font-size: 20px;
+    font-size: 18px;
     color: #222;
 }
+
+.button-container {
+    align-items: end;
+}
+
