@@ -12,14 +12,14 @@ body {
 
 .background {
     background-image: url('grass.png'); 
-    background-size: cover; /* Ensure the background image fully covers the screen */
+    background-size: cover; 
     background-position: center; 
-    position: absolute; /* Ensure it is positioned correctly */
+    position: absolute; 
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: -1; /* Keeps the background behind other content */
+    z-index: -1; 
     opacity: 0.5;
 }
 
@@ -28,9 +28,9 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 0px 12px; /* Adjust padding for spacing */
-    position: absolute; /* Ensures it's positioned at the top */
-    top: 10px; /* Moves it higher */
+    padding: 0px 12px; 
+    position: absolute; 
+    top: 10px; 
     left: 0;
     right: 0;
     box-sizing: border-box;
@@ -100,13 +100,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%; /* Ensures arrows stay wide apart */
+    width: 100%; 
     position: relative;
 }
 
 
 .arrow {
-    font-size: 28px; /* Makes arrows wider and less pointy */
+    font-size: 28px; 
     font-weight: bold;
     cursor: pointer;
     color: black;
@@ -116,15 +116,15 @@ body {
 }
 
 .arrow:hover {
-    color: #293a24; /* Dark green on hover */
+    color: #293a24; 
 }
 
 .left {
-    left: -80px; /* Move the left arrow farther left */
+    left: -80px; 
 }
 
 .right {
-    right: -80px; /* Move the right arrow farther right */
+    right: -80px; 
 }
 
 .tasks-container {
@@ -151,13 +151,13 @@ body {
 
 .task-item {
     background-color: #f9f5e7;
-    margin: 5px 0; /* Add more spacing */
+    margin: 5px 0; 
     padding: 10px;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    width: 90%; /* Slightly smaller for better spacing */
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 90%; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
 .checkbox {
@@ -165,11 +165,11 @@ body {
     height: 20px;
     margin-right: 10px;
     cursor: pointer;
-    border: 2px solid #4a6741; /* Border color */
-    border-radius: 5px; /* Rounded corners */
+    border: 2px solid #4a6741;
+    border-radius: 5px; 
     position: relative;
-    background-color: #f9f5e7; /* Background color when unchecked */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    background-color: #f9f5e7; 
+    transition: background-color 0.3s ease;
 }
 
 .subtask-list {

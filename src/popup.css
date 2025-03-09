@@ -55,11 +55,11 @@ body {
 
 #task-container {
     background-color: #7C905B;
-    padding: 20px 10px; /* Added padding on the left and right */
+    padding: 20px 10px; 
     border-radius: 10px;
     overflow-y: auto;
     margin-top: 45px;
-    height: 310px; /* Fixed size for the task container */
+    height: 310px; 
 }
 
 #task-list {
