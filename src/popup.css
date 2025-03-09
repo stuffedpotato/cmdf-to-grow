@@ -7,26 +7,43 @@ body {
     box-sizing: border-box;
 }
 
-h1 {
-    text-align: left; /* Aligns the title to the left */
-    padding-left: -10px; /* Moves the title more to the left */
-    padding-top: -10px; /* Moves the title up */
-    margin: 0; /* Removes any default margin */
-    font-size: 30px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0;
 }
 
-#garden {
-    text-align: center;
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+#garden-btn {
+    background-color: #4a6741;
+    color: black;
+    font-size: 16px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#garden-btn:hover {
+    background-color: #C6CA97;
+    transition: 0.3s;
 }
 
 #task-container {
     background-color: #C6CA97;
     padding: 15px;
     border-radius: 10px;
-    max-height: 320px;
+    max-height: 370px;
     overflow-y: auto;
     margin: 10px 0;
-    height: 300px; /* Fixed size for the task container */
+    height: 370px; /* Fixed size for the task container */
     position: relative;
 }
 
@@ -48,15 +65,16 @@ h1 {
 
 #add-task {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 30px;
+    left: 20px;
     padding: 10px 10px;
     font-size: 20px;
     background-color: #FBF6E6;
     color: black;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 #new-task {

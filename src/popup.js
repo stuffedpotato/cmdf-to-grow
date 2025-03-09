@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("task-list");
-    const newTaskInput = document.getElementById("new-task");
     const addTaskBtn = document.getElementById("add-task");
-    const plantImg = document.getElementById("plant");
 
     // Load tasks from storage
     chrome.storage.sync.get("tasks", (data) => {
@@ -12,14 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Add new task
+    // Add new task (Now you may want to trigger it by some other action like a form or button)
     addTaskBtn.addEventListener("click", () => {
-        const taskText = newTaskInput.value.trim();
+        const taskText = prompt("Enter a new task:");  // Simple prompt for the task text
         if (taskText) {
             const taskId = Date.now(); // Unique task ID
             addTaskToUI(taskText, false, taskId);
             saveTasks();
-            newTaskInput.value = "";
             updatePlantGrowth();
         }
     });
