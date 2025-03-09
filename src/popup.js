@@ -43,6 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error('Error:', error);
             } else {
                 const newTask = data.reply;
+                var rand =  Math.floor(Math.random() * 3);
+                newTask.plant = rand;
+
                 tasks.push(newTask);
                 addTaskToUI(prompt, false);
                 saveTasks();

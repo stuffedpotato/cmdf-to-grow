@@ -44,6 +44,7 @@ def generate():
     
     new_task = {
         "main_task": main_task,
+        "plant": 0,
         "subtasks": subtasks,
         "completed": False
     }
