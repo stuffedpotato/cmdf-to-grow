@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const subtaskList = document.getElementById("subtask-list");
     const newSubtaskInput = document.getElementById("new-subtask");
     const addSubtaskBtn = document.getElementById("add-subtask");
+    const gardenBtn = document.getElementById("garden-btn"); // Get the "My Garden" button
 
     // Get the current task ID from storage
     chrome.storage.sync.get("currentTaskId", (data) => {
@@ -47,4 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
             chrome.storage.sync.set({ subtasks: updatedData });
         });
     }
+
+    // Add event listener to the "My Garden" button to navigate to garden.html
+    gardenBtn.addEventListener("click", () => {
+        window.location.href = "garden.html"; // Redirect to garden.html
+    });
 });

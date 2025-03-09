@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const gardenBtn = document.getElementById("garden-btn"); // Get the "My Garden" button
     const newTaskInput = document.getElementById("user-input");
 
-
     let tasks = [];
 
     function loadTasks() {
@@ -40,12 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (data.error) {
-                //TODO: Error handling
+                // Error handling
                 console.error('Error:', error);
-
             } else {
                 const newTask = data.reply;
-                tasks.push(newTask)
+                tasks.push(newTask);
                 addTaskToUI(prompt, false);
                 saveTasks();
                 newTaskInput.value = "";
@@ -104,5 +102,4 @@ document.addEventListener("DOMContentLoaded", () => {
     function saveTasks() {
         chrome.storage.sync.set({ tasks }, loadTasks); // Save and reload UI
     }
-
 });
