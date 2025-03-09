@@ -1,0 +1,144 @@
+
+/* Header 
+
+.header-title {
+    text-align: center;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.plant-picture {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 8px 8px 0 rgba(205, 92, 92, 0.372);
+}
+
+.plant-picture:hover {
+    box-shadow: 0 8px 12px 0 rgba(205, 92, 92, 0.623);
+}
+*/
+
+
+body {
+    width: 400px;
+    height: 550px;
+    background-color: #8a9a5b;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .background-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+  
+  .header {
+    padding: 20px;
+    padding-bottom: 10px;
+  }
+  
+  .title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+    color: #222;
+    margin-bottom: 20px;
+  }
+  
+  .plant-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .plant-circle {
+    width: 200px;
+    height: 200px;
+    background-color: #f9f5e7;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .plant-img {
+    width: 70%;
+    height: auto;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    font-size: 50px;
+    color: #222;
+  }
+  
+  .nav-arrow {
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .page-title {
+    font-size: 32px;
+    text-align: center;
+  }
+  
+  .tasks-container {
+    padding: 15px;
+    background-color: rgba(210, 215, 170, 0.7);
+    margin: 15px;
+    border-radius: 10px;
+  }
+  
+  .task-item {
+    background-color: #f9f5e7;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #4a6741;
+    margin-right: 15px;
+    border-radius: 3px;
+  }
+  
+  .task-text {
+    font-size: 20px;
+    color: #222;
+  }
+  
+  .garden-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #3e6341;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+  }
+
+
+
+
+
