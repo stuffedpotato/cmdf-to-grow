@@ -9,10 +9,34 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Variables to track current task and all tasks
     let currentTaskId = 0;
-    let allTasks = [];
+    let allTasks = {};
     let currentTask = null;
 
     console.log("Subtasks.js loaded, getting data from storage...");
+    
+    // Debug function to check arrow elements
+    function debugArrows() {
+        const leftArrow = document.querySelector(".arrow.left");
+        const rightArrow = document.querySelector(".arrow.right");
+        
+        console.log("Left arrow exists:", !!leftArrow);
+        console.log("Right arrow exists:", !!rightArrow);
+        
+        if (leftArrow) {
+            console.log("Left arrow computed style:", 
+                window.getComputedStyle(leftArrow).visibility,
+                window.getComputedStyle(leftArrow).opacity);
+        }
+        
+        if (rightArrow) {
+            console.log("Right arrow computed style:", 
+                window.getComputedStyle(rightArrow).visibility,
+                window.getComputedStyle(rightArrow).opacity);
+        }
+    }
+    
+    // Call debug function after a short delay
+    setTimeout(debugArrows, 500);
 
     function showError(message) {
         const errorDiv = document.createElement("div");
@@ -96,12 +120,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (leftArrow) {
                 if (currentIndex <= 0) {
                     console.log("Hiding left arrow (first item)");
-                    leftArrow.style.visibility = "hidden";
-                    leftArrow.style.opacity = "0";
+                    leftArrow.classList.add("arrow-hidden");
+                    leftArrow.classList.remove("arrow-visible");
                 } else {
                     console.log("Showing left arrow (not first item)");
-                    leftArrow.style.visibility = "visible";
-                    leftArrow.style.opacity = "1";
+                    leftArrow.classList.add("arrow-visible");
+                    leftArrow.classList.remove("arrow-hidden");
                 }
             } else {
                 console.error("Left arrow element not found during visibility update");
@@ -111,12 +135,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (rightArrow) {
                 if (currentIndex >= taskIds.length - 1) {
                     console.log("Hiding right arrow (last item)");
-                    rightArrow.style.visibility = "hidden";
-                    rightArrow.style.opacity = "0";
+                    rightArrow.classList.add("arrow-hidden");
+                    rightArrow.classList.remove("arrow-visible");
                 } else {
                     console.log("Showing right arrow (not last item)");
-                    rightArrow.style.visibility = "visible";
-                    rightArrow.style.opacity = "1";
+                    rightArrow.classList.add("arrow-visible");
+                    rightArrow.classList.remove("arrow-hidden");
                 }
             } else {
                 console.error("Right arrow element not found during visibility update");
@@ -126,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to navigate to previous task
     function navigateToPrevTask() {
+        console.log("Left arrow clicked, trying to navigate to prev task");
         chrome.storage.sync.get(["currentTaskId", "tasks"], (data) => {
             const currentId = data.currentTaskId;
             const tasks = data.tasks;
@@ -162,6 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Function to navigate to next task
     function navigateToNextTask() {
+        console.log("Right arrow clicked, trying to navigate to next task");
         chrome.storage.sync.get(["currentTaskId", "tasks"], (data) => {
             const currentId = data.currentTaskId;
             const tasks = data.tasks;
@@ -215,7 +241,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Modify the updateTaskInStorage function to use consistent object notation
     function updateTaskInStorage() {
+        // Make sure allTasks is an object, not an array
+        if (!allTasks) allTasks = {};
+        
         allTasks[currentTaskId] = currentTask;
         
         chrome.storage.sync.set({ 
@@ -225,8 +255,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Update the loadTask function to handle object structure
     function loadTask(taskId) {
-        if (taskId >= 0 && taskId < allTasks.length) {
+        if (allTasks && allTasks[taskId]) {
             currentTaskId = taskId;
             currentTask = allTasks[taskId];
             
@@ -241,16 +272,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Update the initial loading section
     chrome.storage.sync.get("tasks", (data) => {
-        if (data.tasks && data.tasks.length > 0) {
+        if (data.tasks && Object.keys(data.tasks).length > 0) {
             allTasks = data.tasks;
             
             chrome.storage.sync.get(["currentTaskId", "currentTask"], (taskData) => {
-                currentTaskId = taskData.currentTaskId || 0;
-                
-                if (currentTaskId >= allTasks.length) {
-                    currentTaskId = 0;
-                }
+                currentTaskId = taskData.currentTaskId || Object.keys(allTasks)[0];
                 
                 currentTask = allTasks[currentTaskId];
                 
@@ -258,7 +286,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     mainTaskTitle.textContent = currentTask.main_task;
                     displaySubtasks(currentTask.subtasks);
                     updatePlantImage();
-                    updateArrowVisibility();
+                    
+                    // Setup arrow navigation after tasks are loaded
+                    setupArrowNavigation();
                 } else {
                     showError("Failed to load the current task.");
                 }
@@ -268,20 +298,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    if (leftArrow) {
-        leftArrow.addEventListener("click", navigateToPrevTask);
-        leftArrow.style.cursor = "pointer";
-        console.log("Left arrow click listener added");
-    } else {
-        console.error("Left arrow element not found");
-    }
-    
-    if (rightArrow) {
-        rightArrow.addEventListener("click", navigateToNextTask);
-        rightArrow.style.cursor = "pointer";
-        console.log("Right arrow click listener added");
-    } else {
-        console.error("Right arrow element not found");
+    // Separate function to set up arrow navigation
+    function setupArrowNavigation() {
+        // Get fresh references to the arrows
+        const leftArrow = document.querySelector(".arrow.left");
+        const rightArrow = document.querySelector(".arrow.right");
+        
+        console.log("Setting up arrow navigation. Left arrow:", leftArrow, "Right arrow:", rightArrow);
+        
+        if (leftArrow) {
+            leftArrow.addEventListener("click", navigateToPrevTask);
+            leftArrow.style.cursor = "pointer";
+            console.log("Left arrow click listener added");
+        } else {
+            console.error("Left arrow element not found");
+        }
+        
+        if (rightArrow) {
+            rightArrow.addEventListener("click", navigateToNextTask);
+            rightArrow.style.cursor = "pointer";
+            console.log("Right arrow click listener added");
+        } else {
+            console.error("Right arrow element not found");
+        }
+        
+        // Update arrow visibility after setting up listeners
+        updateArrowVisibility();
     }
 
     gardenBtn.addEventListener("click", () => {

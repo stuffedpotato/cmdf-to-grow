@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const gardenBtn = document.getElementById("garden-btn");
     const newTaskInput = document.getElementById("user-input");
 
-    let tasks = [];
+    let tasks = {};
+    let nextTaskId = 0;
 
     function loadTasks() {
         chrome.storage.sync.get("tasks", (data) => {
@@ -11,7 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (data.tasks) {
                 tasks = data.tasks;
-                tasks.forEach((task, index) => addTaskToUI(task, index));
+                // Get the highest task ID to determine the next ID
+                const taskIds = Object.keys(tasks).map(id => parseInt(id));
+                nextTaskId = taskIds.length > 0 ? Math.max(...taskIds) + 1 : 0;
+                
+                // Render each task
+                Object.keys(tasks).forEach(taskId => {
+                    addTaskToUI(tasks[taskId], taskId);
+                });
             }
         });
     }
@@ -38,14 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (data.error) {
-                console.error('Error:', error);
+                console.error('Error:', data.error);
             } else {
                 const newTask = data.reply;
                 var rand = Math.floor(Math.random() * 3);
                 newTask.plant = rand;
 
-                tasks.push(newTask);
-                addTaskToUI(newTask, tasks.length - 1);
+                // Add task with a unique ID
+                const taskId = nextTaskId.toString();
+                tasks[taskId] = newTask;
+                nextTaskId++;
+                
+                addTaskToUI(newTask, taskId);
                 saveTasks();
                 newTaskInput.value = "";
             }
@@ -58,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "garden.html"; 
     });
 
-    function addTaskToUI(task, index) {
+    function addTaskToUI(task, taskId) {
         const li = document.createElement("li");
 
         const checkbox = document.createElement("input");
@@ -76,7 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             
             saveTasks();
-            loadTasks();
         });
 
         const taskText = document.createElement("span");
@@ -89,9 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         arrowBtn.addEventListener("click", () => {
             console.log("Arrow button clicked!");
-            console.log("Storing task:", task);
+            console.log("Storing task ID:", taskId);
         
-            chrome.storage.sync.set({ currentTaskId: index, currentTask: task }, () => {
+            chrome.storage.sync.set({ currentTaskId: taskId, currentTask: task }, () => {
                 if (chrome.runtime.lastError) {
                     console.error("Error storing task:", chrome.runtime.lastError);
                 } else {
@@ -106,9 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteBtn.classList.add("task-button", "delete-btn");
         deleteBtn.title = "Delete Task";
         deleteBtn.addEventListener("click", () => {
-            tasks.splice(index, 1); 
+            delete tasks[taskId]; 
             saveTasks();
-            loadTasks();
         });
 
         li.appendChild(checkbox);
