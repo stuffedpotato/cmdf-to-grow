@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("task-list");
-    const newTaskInput = document.getElementById("new-task");
-    const addPlantBtn = document.getElementById("add-plant");
+    const newTaskInput = document.getElementById("user-input");
 
     let tasks = [];
 
@@ -100,8 +99,4 @@ document.addEventListener("DOMContentLoaded", () => {
         chrome.storage.sync.set({ tasks }, loadTasks); // Save and reload UI
     }
 
-    // Handle Add a Plant button
-    addPlantBtn.addEventListener("click", () => {
-        alert("Adding a plant...");
-    });
 });
