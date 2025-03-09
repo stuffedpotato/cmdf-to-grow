@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Grow</title>
-    <link rel="stylesheet" type="text/css" href="popup.css">
+    <title>ToGrow</title>
+    <link rel="stylesheet" type="text/css" href="popup.css"> 
 </head>
 <body>
-    <h1>To Grow</h1>
+    <h1>ToGrow</h1>
+
     <div id="garden">
         <img id="plant" src="seed.png" alt="Plant">
     </div>
 
-    <ul id="task-list">
-    </ul>
-    <input type="text" id="new-task" placeholder="Add a new task">
-    <button id="add-task">Add</button>
+    <div id="task-container">
+        <ul id="task-list"></ul>
+    </div>
 
-   
+    <input type="text" id="new-task" placeholder="Add a new task">
+    <button id="add-task">Add Task</button>
+    <button id="add-plant">➕ Add a Plant</button>
 
     <script src="popup.js"></script>
 </body>
 </html>
-

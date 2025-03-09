@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "To Grow",
+    "name": "ToGrow",
     "version": "0.1.0",
     "description": "A to-do list that grows a garden as you complete tasks.",
     "permissions": ["storage"],

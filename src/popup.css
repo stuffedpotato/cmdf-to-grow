@@ -5,10 +5,56 @@ body {
     padding: 10px;
     box-sizing: border-box;
     background-color: #7C905B;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
+}
+h1 {
+    text-align: center; /* Center the text horizontally */
 }
 
 #task-list {
     max-height: 60%;  /* Adjust the height as needed */
     overflow-y: auto;
+}
+
+#task-container {
+    background-color: #C6CA97; /* Light green */
+    padding: 15px;
+    border-radius: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin: 10px 0;
+}
+
+#task-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#task-list li {
+    background: #FBF6E6; /* Even lighter green for each task */
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrow-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#add-plant, #add-task {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

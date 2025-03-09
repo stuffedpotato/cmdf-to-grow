@@ -64,3 +64,63 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const taskList = document.getElementById("task-list");
+    const newTaskInput = document.getElementById("new-task");
+    const addTaskBtn = document.getElementById("add-task");
+    const addPlantBtn = document.getElementById("add-plant");
+
+    // Load tasks from storage
+    chrome.storage.sync.get("tasks", (data) => {
+        if (data.tasks) {
+            data.tasks.forEach(task => addTaskToUI(task.text, task.completed));
+        }
+    });
+
+    // Add new task
+    addTaskBtn.addEventListener("click", () => {
+        const taskText = newTaskInput.value.trim();
+        if (taskText) {
+            addTaskToUI(taskText, false);
+            saveTasks();
+            newTaskInput.value = "";
+        }
+    });
+
+    function addTaskToUI(text, completed) {
+        const li = document.createElement("li");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = completed;
+        checkbox.addEventListener("change", saveTasks);
+
+        const taskText = document.createElement("span");
+        taskText.textContent = text;
+
+        const arrowBtn = document.createElement("button");
+        arrowBtn.textContent = "→";
+        arrowBtn.classList.add("arrow-btn");
+        arrowBtn.addEventListener("click", () => {
+            alert(`Task: ${text}`);
+        });
+
+        li.appendChild(checkbox);
+        li.appendChild(taskText);
+        li.appendChild(arrowBtn);
+        taskList.appendChild(li);
+    }
+
+    function saveTasks() {
+        const tasks = [];
+        document.querySelectorAll("#task-list li").forEach(li => {
+            tasks.push({ text: li.children[1].textContent, completed: li.children[0].checked });
+        });
+        chrome.storage.sync.set({ tasks });
+    }
+
+    // Handle Add a Plant button
+    addPlantBtn.addEventListener("click", () => {
+        alert("Adding a plant...");
+    });
+});
