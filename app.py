@@ -2,8 +2,10 @@ from flask import Flask, request, jsonify
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # LOADING AND CONFIGURING API
 load_dotenv()  # Load environment variables from .env
@@ -16,34 +18,7 @@ if not API_KEY:
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
 
-# Storage for multiple tasks
-tasks = []
-
-# TO GET ALL TASKS
-@app.route("/task", methods=["GET"])
-def get_tasks():
-    return jsonify({"tasks": tasks})  # Return list of tasks
-
-# TO CREATE A NEW TASK:SUBTASKS
-@app.route("/task", methods=["POST"])
-def create_task():
-    data = request.json
-    main_task = data.get("main_task", "")
-
-    if not main_task:
-        return jsonify({"error": "No main task provided"}), 400
-
-    new_task = {
-        "main_task": main_task,
-        "subtasks": [],  # Empty list for now
-        "completed": False  # Default status is not completed
-    }
-
-    tasks.append(new_task)
-    return jsonify({"message": "Task added", "task": new_task}), 201
-
-
-# TO CREATE A NEW TASK:SUBTASKS
+# TO GENERATE SUBTASKS FOR A TASK
 @app.route("/generate", methods=["POST"])
 def generate():
     data = request.json  # Get JSON data from the request
