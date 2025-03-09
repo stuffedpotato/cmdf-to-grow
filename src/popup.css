@@ -1,10 +1,22 @@
 body {
     width: 400px;
     height: 550px;
-    background-color: #7C905B;
     font-family: 'Poppins', sans-serif;
     padding: 10px;
     box-sizing: border-box;
+}
+
+.background {
+    background-image: url('grass.png'); 
+    background-size: 90%; 
+    background-position: center; 
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1; 
+    opacity: 0.5;
 }
 
 .header {
@@ -12,23 +24,29 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin: 0;
+    padding: 0px 12px; 
+    position: absolute; 
+    top: -10px; 
+    left: 0;
+    right: 0;
+    box-sizing: border-box;
 }
 
-h1 {
+.logo {
     font-size: 24px;
-    margin: 0;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#garden-btn {
-    background-color: #4a6741;
-    color: black;
-    font-size: 16px;
+.garden-button {
+    background-color: #32472c;
+    color: #f9f5e7;
     padding: 8px 15px;
     border-radius: 10px;
+    font-size: 16px;
+    font-weight: SemiBold;
     border: none;
     cursor: pointer;
-    font-weight: bold;
 }
 
 #garden-btn:hover {
@@ -37,25 +55,25 @@ h1 {
 }
 
 #task-container {
-    background-color: #C6CA97;
-    padding: 15px;
+    background-color: #7C905B;
+    padding: 20px 10px; /* Added padding on the left and right */
     border-radius: 10px;
-    max-height: 300px;
     overflow-y: auto;
-    margin: 10px 0;
-    height: 300px; /* Fixed size for the task container */
-    position: relative;
+    margin-top: 45px;
+    height: 310px; /* Fixed size for the task container */
 }
 
 #task-list {
     list-style-type: none;
     padding: 0;
-    height: 100%;
+    margin: 0;
 }
 
 #task-list li {
     background: #FBF6E6;
     padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin: 5px 0;
     border-radius: 5px;
     display: flex;
@@ -65,21 +83,21 @@ h1 {
 
 #add-task {
     position: absolute;
-    bottom: 30px;
+    bottom: 20px;
     left: 20px;
-    padding: 10px 10px;
-    font-size: 20px;
+    padding: 8px 15px;
+    font-size: 16px;
     background-color: #FBF6E6;
     color: black;
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: SemiBold;
 }
 
 #new-task {
     display: block;
-    margin: 20px 0 10px 0;
+    margin: 10px 0 10px 0;
     padding: 10px 10px;
     font-size: 16px;
     width: calc(100% - 30px);
@@ -97,7 +115,7 @@ h1 {
     border: 1px solid #ccc;
     resize: none;
     box-sizing: border-box;
-    margin-top: 3px;
+    margin-top: 10px;
     background-color: #FBF6E6;
 }
 
