@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("task-list");
-    const addPlantBtn = document.getElementById("add-plant");
     const gardenBtn = document.getElementById("garden-btn");
     const newTaskInput = document.getElementById("user-input");
 
@@ -42,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error('Error:', error);
             } else {
                 const newTask = data.reply;
-                var rand =  Math.floor(Math.random() * 3);
+                var rand = Math.floor(Math.random() * 3);
                 newTask.plant = rand;
 
                 tasks.push(newTask);
@@ -75,16 +74,15 @@ document.addEventListener("DOMContentLoaded", () => {
         taskText.textContent = task.main_task;
 
         const arrowBtn = document.createElement("button");
-        arrowBtn.textContent = "→";
-        arrowBtn.classList.add("arrow-btn");
+        arrowBtn.innerHTML = "→";
+        arrowBtn.classList.add("task-button", "arrow-btn");
+        arrowBtn.title = "View Subtasks";
 
-        // Log the task data before saving it to chrome storage
         arrowBtn.addEventListener("click", () => {
             console.log("Arrow button clicked!");
             console.log("Storing task:", task);
         
             chrome.storage.sync.set({ currentTaskId: index, currentTask: task }, () => {
-                // Check if there was an error with chrome.runtime.lastError
                 if (chrome.runtime.lastError) {
                     console.error("Error storing task:", chrome.runtime.lastError);
                 } else {
@@ -94,10 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
         
-
         const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "🗑";
-        deleteBtn.classList.add("delete-btn");
+        deleteBtn.innerHTML = "🗑";
+        deleteBtn.classList.add("task-button", "delete-btn");
+        deleteBtn.title = "Delete Task";
         deleteBtn.addEventListener("click", () => {
             tasks.splice(index, 1); 
             saveTasks();

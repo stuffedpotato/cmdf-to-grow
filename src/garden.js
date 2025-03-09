@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const plantsContainer = document.getElementById("plants-container");
     const logo = document.getElementById("home-btn");
@@ -38,9 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             plantImage.src = `img/plant${task.plant}-stage${plantStage}.png`;
             plantImage.alt = `Plant ${task.plant} Stage ${plantStage}`;
-
         }
-        
 
         const taskName = document.createElement("p");
         taskName.textContent = task.main_task;
