@@ -1,31 +1,59 @@
-## Inspiration
-Around 30-50% of neurodivergent individuals, including those with ADHD, autism, or other conditions, report difficulties with tasks and planning subtasks. These challenges often stem from issues like executive function deficits, which affect the ability to organize, prioritize, and break tasks down into manageable parts. We wanted to create a tool that simplifies this process, providing structured guidance and reducing the overwhelm that often comes with tackling complex projects.
+# 🌸 ToGrow 🌸
 
-## What it does
-ToGrow is a chrome extension that helps users break down tasks into smaller, more actionable steps. Users enter a task, and the extension, powered by the Gemini API, suggests logical sub-tasks based on the input. This ensures a step-by-step approach to productivity, making overwhelming tasks feel more achievable.
+![ToGrow Banner](ToGrow.png)
 
-## How we built it
-- **Frontend:** We started with a **Figma** prototype, then used **HTML**, **CSS** and **JavaScript** to design a clean and intuitive user interface.
-- **Backend:** We used **JavaScript** to handle task logic and integrated the **Gemini API** using **Flask for Python** to generate suggested sub-tasks dynamically.
+## 💡 About ToGrow
+ToGrow is an **AI-powered Chrome extension** developed during cmd-f 2025 that helps **neurodivergent individuals** break down overwhelming tasks into smaller, manageable steps. Task planning can be difficult for those with ADHD, autism, or executive function challenges, so we built a tool to make productivity feel more achievable.
 
-## Challenges we ran into
-- Designing a system that was simple yet effective without overwhelming users took several iterations and Figma frames. 
-- Learning how to integrate Gemini API for the first time.
-- Using CORS on different operating systems like macOS and Windows.
+## 🌱 Key Features
+- **AI Task Breakdown**: Powered by Gemini API to transform large tasks into actionable steps
+- **User-Friendly Interface**: Simple, intuitive design to reduce cognitive load
+- **Chrome Extension Format**: Easily accessible while working on any website
+- **Plant Growth Visualization**: Visual representation of progress to provide positive reinforcement
+- **Chrome Sync Storage**: Syncs tasks across devices, reducing need for backend storage
 
-## Accomplishments that we're proud of
-- Successfully integrating AI-powered task breakdowns into a Chrome extension.
-- Creating an intuitive and visually appealing interface, including the use of **hand drawn** plant animations.
-- Designing a tool that has real-world applications for neurodivergent users.
-- Integrating chrome storage synch to reduce the need for backend database storage.
+## 🏆 Recognition
+ToGrow was recognized as one of the top projects at cmd-f 2025 hackathon hosted by nwPlus at UBC!
 
-## What we learned
-- Creating a effective UX/UI for such a small frame.
-- The importance of considering the struggles of all individuals when creating a tool aimed to improve daily lives and tasks. 
-- Best practices for building and structuring Chrome extensions.
-- How to effectively work with the Gemini API for task generation.
+## 🛠️ Technologies Used
+- **Backend**: Flask (Python)
+- **Frontend**: HTML, CSS, JavaScript
+- **AI Integration**: Gemini API
+- **Art Assets**: Hand-drawn plant assets created in Krita
 
-## What's next for ToGrow
-- **Customization:** Allowing users to personalize task breakdowns based on their preferences.
-- **Task Tracking:** Adding progress tracking features to help users stay motivated.
-- **Community Feedback:** Engaging with neurodivergent communities to refine and improve features based on real user experiences.
+## 📱 Demo & Links
+- [Demo Video](https://youtu.be/Vro6ysWF6G4?si=Na4b3zgl3VZcqMA7)
+- [DevPost Submission](https://devpost.com/software/togrow)
+
+## 👥 Our Team
+This project was a collaborative effort by:
+- **[Myself](https://github.com/stuffedpotato)**: Backend development (Flask), API integration (Gemini), frontend (JavaScript), and debugging CORS issues
+- **[Melissa Goon](https://github.com/melissagoon)**: Backend (Flask, Python) & frontend (HTML, CSS, JavaScript), project pitch, and hand-drawn plant assets in Krita
+- **[Grace B](https://github.com/graceb)**: Frontend development (CSS & HTML first-timer) and UI design
+- **[Anisa](https://github.com/anisa888anny)**
+
+## 🧠 What I Learned
+cmd-f 2025 was my first hackathon experience. Through this project, I learned:
+- Flask for backend development
+- Implementing and using AI APIs (Gemini)
+- Frontend web development
+- Debugging cross-origin resource sharing (CORS) issues
+- Collaborative development under time constraints
+
+## 📋 Installation & Setup
+
+1. Clone this repository
+   ```bash
+   git clone https://github.com/stuffedpotato/cmdf-to-grow.git
+
+2. Navigate to the project directory
+   ```bash
+   cd cmdf-to-grow
+
+3. Set up the backend (requires Python)
+   ```bash
+   pip install -r requirements.txt
+
+4. Run the app (instead of python, use python3 for macOS)
+   ```bash
+   python app.py
